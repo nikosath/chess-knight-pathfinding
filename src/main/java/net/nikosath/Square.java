@@ -1,46 +1,49 @@
 package net.nikosath;
-
 public class Square {
+    private static final int BOARD_WIDTH = 8;
+    private static final int BOARD_HEIGHT = 8;
     private final int x;
     private final int y;
     private final String squareName;
+    private static Square cache[][] = new Square[BOARD_WIDTH][BOARD_HEIGHT];
 
-    public Square(String squareName) {
+    public static Square newInstance(String squareName) {
+        int x = squareName.charAt(0) - 'A';
+        int y = squareName.charAt(1) - '1';
+        if (cache[x][y] == null) {
+            cache[x][y] = new Square(squareName, x, y);
+        }
+        return cache[x][y];
+    }
+    public static Square newInstance(int x, int y) {
+        if (cache[x][y] == null) {
+            cache[x][y] = new Square(x, y);
+        }
+        return cache[x][y];
+    }
+    private Square(String squareName, int x, int y) {
         this.squareName = squareName;
         // e.g. "A1" -> (0,0), "B2" -> (1,1)
-        this.x = squareName.charAt(0) - 'A';
-        this.y = squareName.charAt(1) - '1';
+        this.x = x;
+        this.y = y;
     }
-
+    private Square(int x, int y) {
+        this.x = x;
+        this.y = y;
+        char c1 = (char) (x + 'A');
+        char c2 = (char) (y + '1');
+        this.squareName = String.valueOf(new char[] {c1, c2});
+    }
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Square square = (Square) o;
-
-        if (x != square.x) return false;
-        if (y != square.y) return false;
-        return squareName.equals(square.squareName);
+    public String toString() {
+        return squareName;
     }
-
-    @Override
-    public int hashCode() {
-        int result = x;
-        result = 31 * result + y;
-        result = 31 * result + squareName.hashCode();
-        return result;
-    }
-
-    // Getters to be used only for testing
     int getX() {
         return x;
     }
-
     int getY() {
         return y;
     }
-
     String getSquareName() {
         return squareName;
     }

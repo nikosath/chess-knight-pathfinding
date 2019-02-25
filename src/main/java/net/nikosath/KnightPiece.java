@@ -1,28 +1,38 @@
 package net.nikosath;
 
-import java.util.Arrays;
-import java.util.List;
+
+import net.nikosath.interfaces.Piece;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class KnightPiece implements Piece {
 
-    private final List<Move> moves;
+    private final Set<Move> moves;
+//    public int longestMoveInSquares = 3;
 
     public KnightPiece() {
         this.moves = prepareKnightMoves();
     }
 
-    private static List<Move> prepareKnightMoves() {
-        Move[] moves = {
-                new Move(1, 2),
-                new Move(1, -2),
-                new Move(-1, 2),
-                new Move(-1, -2),
-                new Move(2, 1),
-                new Move(2, -1),
-                new Move(-2, 1),
-                new Move(-2, -1)
-        };
-        return Arrays.asList(moves);
+    @Override
+    public Set<Move> getMoves() {
+        return moves;
+    }
+
+    private Set<Move> prepareKnightMoves() {
+        Set<Move> set = new HashSet<>();
+
+        set.add(new Move(1, 2));
+        set.add(new Move(1, -2));
+        set.add(new Move(-1, 2));
+        set.add(new Move(-1, -2));
+        set.add(new Move(2, 1));
+        set.add(new Move(2, -1));
+        set.add(new Move(-2, 1));
+        set.add(new Move(-2, -1));
+
+        return set;
     }
 
 }
