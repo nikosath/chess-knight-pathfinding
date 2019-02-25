@@ -57,8 +57,8 @@ public class AStar {
     }
 
     private void addNodeToQueueUnlessAlreadyDid(SquareNode neighborNode) {
-        SquareNode queuedNode = recordOfNodesQueued.get(neighborNode.getSquare());
-        if (queuedNode == null || queuedNode.getMovesFromStart() > neighborNode.getMovesFromStart()) {
+        SquareNode recordedNode = recordOfNodesQueued.get(neighborNode.getSquare());
+        if (recordedNode == null || recordedNode.getMovesFromStart() > neighborNode.getMovesFromStart()) {
             queue.add(neighborNode);
             recordOfNodesQueued.put(neighborNode.getSquare(), neighborNode);
         }
