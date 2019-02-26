@@ -7,19 +7,17 @@ import java.util.*;
 public class AStar {
 
     private int maxMovesAllowed;
-//    private Piece piece;
     private final Queue<SquareNode> queue = new PriorityQueue<>(new DefaultComparator());
-    private final Map<Square, SquareNode> recordOfNodesQueued = new HashMap<>();
+    private final Map<Square, SquareNode> recordOfBestNodesQueued = new HashMap<>(Square.BOARD_WIDTH * Square.BOARD_HEIGHT);
     private Player player;
 
     public AStar(int maxMovesAllowed, Piece piece) {
         this.maxMovesAllowed = maxMovesAllowed;
-//        this.piece = piece;
         player = new Player(piece);
     }
 
 
-    public LinkedList<Square> findPath(Square startSquare, Square goalSquare) {
+    LinkedList<Square> findPath(Square startSquare, Square goalSquare) {
         addStartNodeToQueue(startSquare, goalSquare);
 
         while (!queue.isEmpty()) {
@@ -45,7 +43,7 @@ public class AStar {
         int estimatedCostToTheGoal = player.estimateMinMovesNeeded(startSquare, goalSquare);
         SquareNode startNode = new SquareNode(startSquare, 0, estimatedCostToTheGoal, null);
         queue.add(startNode);
-        recordOfNodesQueued.put(startSquare, startNode);
+        recordOfBestNodesQueued.put(startSquare, startNode);
     }
 
     private boolean reachedGoal(Square goalSquare, SquareNode currentBestNode) {
@@ -57,10 +55,10 @@ public class AStar {
     }
 
     private void addNodeToQueueUnlessAlreadyDid(SquareNode neighborNode) {
-        SquareNode recordedNode = recordOfNodesQueued.get(neighborNode.getSquare());
+        SquareNode recordedNode = recordOfBestNodesQueued.get(neighborNode.getSquare());
         if (recordedNode == null || recordedNode.getMovesFromStart() > neighborNode.getMovesFromStart()) {
             queue.add(neighborNode);
-            recordOfNodesQueued.put(neighborNode.getSquare(), neighborNode);
+            recordOfBestNodesQueued.put(neighborNode.getSquare(), neighborNode);
         }
     }
 }
