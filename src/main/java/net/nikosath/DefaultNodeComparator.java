@@ -2,7 +2,7 @@ package net.nikosath;
 
 import java.util.Comparator;
 
-public class DefaultComparator implements Comparator<SquareNode> {
+public class DefaultNodeComparator implements Comparator<SquareNode> {
     @Override
     public int compare(SquareNode sq1, SquareNode sq2) {
         int compare = Integer.compare(sq1.getTotalMovesFromStartToGoal(), sq2.getTotalMovesFromStartToGoal());

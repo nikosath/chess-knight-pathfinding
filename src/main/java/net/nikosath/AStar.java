@@ -7,8 +7,8 @@ import java.util.*;
 public class AStar {
 
     private int maxMovesAllowed;
-    private final Queue<SquareNode> queue = new PriorityQueue<>(new DefaultComparator());
-    private final Map<Square, SquareNode> recordOfBestNodesQueued = new HashMap<>(Square.BOARD_WIDTH * Square.BOARD_HEIGHT);
+    private final Queue<SquareNode> queue = new PriorityQueue<>(new DefaultNodeComparator());
+    private final Map<Square, SquareNode> recordOfBestNodesQueued = new HashMap<>(Square.BOARD_WIDTH * Square.BOARD_HEIGHT, 1f);
     private Player player;
 
     public AStar(int maxMovesAllowed, Piece piece) {
